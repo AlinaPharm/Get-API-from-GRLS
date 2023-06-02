@@ -73,8 +73,8 @@ async function start() {
                 let info = await page.evaluate(() => {
                     const tab = document.querySelector('#ctl00_plate_gr_fs');
                     const tradeName = document.querySelector('#ctl00_plate_TradeNmR').getAttribute('value');
-                    const OwnerName = document.querySelector('#ctl00_plate_MnfClNmR').innerHTML;
-                    const CountryName = document.querySelector('#ctl00_plate_CountryClR').innerHTML;
+                    const ownerName = document.querySelector('#ctl00_plate_MnfClNmR').innerHTML;
+                    const countryName = document.querySelector('#ctl00_plate_CountryClR').innerHTML;
                     const sixTable = document.querySelector('#ctl00_plate_gr_mnf');
 
                     if (tab) {
@@ -90,61 +90,60 @@ async function start() {
                             keys.forEach((a, i) => (obj[a] = elements[i].innerText));
                             obj['Ссылка'] = document.location.href;
                             obj['Торг. наим.'] = tradeName;
-                            obj['Наименование держателя или владельца РУ лекарственного препарата'] = OwnerName;
-                            obj['Страна держателя или владельца РУ лекарственного препарата'] = CountryName;
+                            obj['Наименование держателя или владельца РУ лекарственного препарата'] = ownerName;
+                            obj['Страна держателя или владельца РУ лекарственного препарата'] = countryName;
 
                             if (sixTable) {
                                 const sixTableRows = sixTable.querySelectorAll('tr');
-
                                 for (let indSix = 1; indSix <= sixTableRows.length - 1; indSix++) {
                                     const thsSix = sixTableRows[indSix].querySelectorAll('td');
                                     obj['Кол-во строк в таблице 6'] = sixTableRows.length - 1;
                                     const homolegalis = thsSix[2].innerText;
-                                    const CountrySix = thsSix[4].innerText;
+                                    const countrySix = thsSix[4].innerText;
 
                                     if (thsSix[1].innerText === 'Производитель (Все стадии, включая выпускающий контроль качества)') {
                                         if (!obj['Выпускающий контроль качества']) {
                                             obj['Выпускающий контроль качества'] = homolegalis;
-                                            obj['Выпускающий контроль качества Страна'] = CountrySix;
+                                            obj['Выпускающий контроль качества Страна'] = countrySix;
                                         } else {
                                             obj['Выпускающий контроль качества'] = `${obj['Выпускающий контроль качества']}, ${homolegalis}`;
-                                            obj['Выпускающий контроль качества Страна'] = `${obj['Выпускающий контроль качества Страна']}, ${CountrySix}`;
+                                            obj['Выпускающий контроль качества Страна'] = `${obj['Выпускающий контроль качества Страна']}, ${countrySix}`;
                                         }
                                         if (!obj['Производитель (готовой ЛФ)']) {
                                             obj['Производитель (готовой ЛФ)'] = homolegalis;
-                                            obj['Производитель (готовой ЛФ) Страна'] = CountrySix;
+                                            obj['Производитель (готовой ЛФ) Страна'] = countrySix;
                                         } else {
                                             obj['Производитель (готовой ЛФ)'] = `${obj['Производитель (готовой ЛФ)']}, ${homolegalis}`;
-                                            obj['Производитель (готовой ЛФ) Страна'] = `${obj['Производитель (готовой ЛФ) Страна']}, ${CountrySix}`;
+                                            obj['Производитель (готовой ЛФ) Страна'] = `${obj['Производитель (готовой ЛФ) Страна']}, ${countrySix}`;
                                         }
                                         if (!obj['Производитель (готовой ЛФ)']) {
                                             obj['Производитель (готовой ЛФ)'] = homolegalis;
-                                            obj['Производитель (готовой ЛФ) Страна'] = CountrySix;
+                                            obj['Производитель (готовой ЛФ) Страна'] = countrySix;
                                         } else {
                                             obj['Производитель (готовой ЛФ)'] = `${obj['Производитель (готовой ЛФ)']}, ${homolegalis}`;
-                                            obj['Производитель (готовой ЛФ) Страна'] = `${obj['Производитель (готовой ЛФ) Страна']}, ${CountrySix}`;
+                                            obj['Производитель (готовой ЛФ) Страна'] = `${obj['Производитель (готовой ЛФ) Страна']}, ${countrySix}`;
                                         }
                                         if (!obj['Упаковщик/фасовщик (в первичную упаковку)']) {
                                             obj['Упаковщик/фасовщик (в первичную упаковку)'] = homolegalis;
-                                            obj['Упаковщик/фасовщик (в первичную упаковку) Страна'] = CountrySix;
+                                            obj['Упаковщик/фасовщик (в первичную упаковку) Страна'] = countrySix;
                                         } else {
                                             obj['Упаковщик/фасовщик (в первичную упаковку)'] = `${obj['Упаковщик/фасовщик (в первичную упаковку)']}, ${homolegalis}`;
-                                            obj['Упаковщик/фасовщик (в первичную упаковку) Страна'] = `${obj['Упаковщик/фасовщик (в первичную упаковку) Страна']}, ${CountrySix}`;
+                                            obj['Упаковщик/фасовщик (в первичную упаковку) Страна'] = `${obj['Упаковщик/фасовщик (в первичную упаковку) Страна']}, ${countrySix}`;
                                         }
                                         if (!obj['Упаковщик/фасовщик (вторичная/третичная упаковка)']) {
                                             obj['Упаковщик/фасовщик (вторичная/третичная упаковка)'] = homolegalis;
-                                            obj['Упаковщик/фасовщик (вторичная/третичная упаковка) Страна'] = CountrySix;
+                                            obj['Упаковщик/фасовщик (вторичная/третичная упаковка) Страна'] = countrySix;
                                         } else {
                                             obj['Упаковщик/фасовщик (вторичная/третичная упаковка)'] = `${obj['Упаковщик/фасовщик (вторичная/третичная упаковка)']}, ${homolegalis}`;
-                                            obj['Упаковщик/фасовщик (вторичная/третичная упаковка) Страна'] = `${obj['Упаковщик/фасовщик (вторичная/третичная упаковка) Страна']}, ${CountrySix}`;
+                                            obj['Упаковщик/фасовщик (вторичная/третичная упаковка) Страна'] = `${obj['Упаковщик/фасовщик (вторичная/третичная упаковка) Страна']}, ${countrySix}`;
                                         }
                                     } else {
                                         if (!obj[thsSix[1].innerText]) {
                                             obj[thsSix[1].innerText] = homolegalis;
-                                            obj[`${thsSix[1].innerText} Страна`] = CountrySix;
+                                            obj[`${thsSix[1].innerText} Страна`] = countrySix;
                                         } else {
                                             obj[thsSix[1].innerText] = `${obj[thsSix[1].innerText]}, ${homolegalis}`;
-                                            obj[`${thsSix[1].innerText} Страна`] = `${obj[`${thsSix[1].innerText} Страна`]}, ${CountrySix}`;
+                                            obj[`${thsSix[1].innerText} Страна`] = `${obj[`${thsSix[1].innerText} Страна`]}, ${countrySix}`;
                                         }
                                     }
                                 }
@@ -181,4 +180,3 @@ async function start() {
     await browser.close();
 }
 start();
-
