@@ -76,6 +76,9 @@ async function start() {
                     const ownerName = document.querySelector('#ctl00_plate_MnfClNmR').innerHTML;
                     const countryName = document.querySelector('#ctl00_plate_CountryClR').innerHTML;
                     const sixTable = document.querySelector('#ctl00_plate_gr_mnf');
+                    const RUnumber = document.querySelector('#ctl00_plate_RegNr').value;
+                    const MNNLP = document.querySelector('#ctl00_plate_Innr').innerHTML;
+                    const ATX = document.querySelector('#ctl00_plate_grATC').querySelectorAll('td')[0].innerHTML;
 
                     if (tab) {
                         const counter = tab.querySelectorAll('tr').length;
@@ -87,12 +90,15 @@ async function start() {
                         for (let i = 1; i <= counter - 1; i++) {
                             const elements = tab.querySelectorAll('tr')[i].querySelectorAll('td');
                             const obj = {};
+                            obj['Номер РУ'] = RUnumber;
+                            obj['МНН ЛП'] = MNNLP;
+                            obj['АТХ'] = ATX;
                             keys.forEach((a, i) => (obj[a] = elements[i].innerText));
                             obj['Ссылка'] = document.location.href;
                             obj['Торг. наим.'] = tradeName;
                             obj['Наименование держателя или владельца РУ лекарственного препарата'] = ownerName;
                             obj['Страна держателя или владельца РУ лекарственного препарата'] = countryName;
-
+                    
                             if (sixTable) {
                                 const sixTableRows = sixTable.querySelectorAll('tr');
                                 for (let indSix = 1; indSix <= sixTableRows.length - 1; indSix++) {
